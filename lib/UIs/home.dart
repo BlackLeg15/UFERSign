@@ -40,19 +40,22 @@ class Home extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => VerifySignatureWidget()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VerifySignatureWidget()));
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0)),
             ),
             FloatingActionButton.extended(
+              backgroundColor: Colors.red,
               icon: const Icon(Icons.add),
               onPressed: () {
                 Navigator.push(
-                  context, 
-                  MaterialPageRoute(
-                    builder: (context) => GenerateKeyPairWidget()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => GenerateKeyPairWidget()));
               },
               label: Text("Gerar par de chaves"),
             )

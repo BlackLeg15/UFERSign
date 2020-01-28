@@ -84,9 +84,15 @@ class RsaKeyHelper {
   String sign(String plainText, RSAPrivateKey privateKey) {
     var signer = RSASigner(SHA256Digest(), "0609608648016503040201");
     signer.init(true, PrivateKeyParameter<RSAPrivateKey>(privateKey));
-    return  base64Encode(signer.generateSignature(createUint8ListFromString(plainText)).bytes);
+    return base64Encode(
+        signer.generateSignature(createUint8ListFromString(plainText)).bytes);
   }
 
+  String signBytes(Uint8List bytes, RSAPrivateKey privateKey) {
+    var signer = RSASigner(SHA256Digest(), "0609608648016503040201");
+    signer.init(true, PrivateKeyParameter<RSAPrivateKey>(privateKey));
+    return base64Encode(signer.generateSignature(bytes).bytes);
+  }
 
   /// Creates a [Uint8List] from a string to be signed
   Uint8List createUint8ListFromString(String s) {
@@ -184,7 +190,6 @@ class RsaKeyHelper {
   ///
   /// Given [RSAPrivateKey] returns a base64 encoded [String] with standard PEM headers and footers
   String encodePrivateKeyToPemPKCS1(RSAPrivateKey privateKey) {
-
     var topLevel = new ASN1Sequence();
 
     var version = ASN1Integer(BigInt.from(0));

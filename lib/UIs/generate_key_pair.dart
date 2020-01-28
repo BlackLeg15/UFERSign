@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pointycastle/api.dart' as crypto;
 import 'package:tst_crypto/utils/dependency_provider.dart';
 import '../utils/local_storage.dart';
@@ -163,7 +160,7 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
   Future<void> saveKeyPair(
       crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>
           keyPair) async {
-    final String path = await getPath();
+    final String path = await LocalStorage().getPath(false);
 
     final String privK = DependencyProvider.of(context)
         .getRsaKeyHelper()
@@ -174,19 +171,5 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
 
     LocalStorage().writeKey(privK, path, false);
     LocalStorage().writeKey(pubK, path, true);
-  }
-
-  Future<String> getPath() async {
-    Directory extDir = await getExternalStorageDirectory();
-    String keyPath;
-    var now = DateTime.now();
-    await Directory(
-            '${extDir.path}/chaves/key_${now.year}${now.month}${now.day}${now.hour}${now.minute}')
-        .create(recursive: true)
-        // The created directory is returned as a Future.
-        .then((Directory directory) {
-      keyPath = directory.path;
-    });
-    return keyPath;
   }
 }
