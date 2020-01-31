@@ -21,11 +21,16 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
   Future<Uint8List> futureFile;
   Future<String> futureSignature;
 
+  final key = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Assinar arquivo"),
+        title: Text(
+          "Assinar arquivo",
+          style: TextStyle(fontSize: 24),
+        ),
       ),
       body: Center(
         child: Padding(
@@ -34,10 +39,12 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               MaterialButton(
+                height: 50,
                 color: Colors.red,
                 child: Text(
                   "Selecione a chave para assinatura (privada)",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  textAlign: TextAlign.center,
                 ),
                 onPressed: () async {
                   final path = await FilePicker.getFilePath(
@@ -46,6 +53,9 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
                     futurePrivK = uploadPrivateKey(path);
                   });
                 },
+              ),
+              Padding(
+                padding: EdgeInsets.all(6.0),
               ),
               Expanded(
                 flex: 1,
@@ -59,12 +69,15 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
                     } else if (snapshot.hasData) {
                       this.privK = snapshot.data;
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           MaterialButton(
-                            color: Colors.blue,
+                            height: 50,
+                            color: Color.fromRGBO(255, 195, 0, 1),
                             child: Text(
                               "Selecione um arquivo",
-                              style: TextStyle(color: Colors.white),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                             onPressed: () async {
                               final path = await FilePicker.getFilePath(
@@ -73,6 +86,9 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
                                 futureFile = uploadFile(path);
                               });
                             },
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(6.0),
                           ),
                           Expanded(
                             child: FutureBuilder<Uint8List>(
@@ -86,12 +102,17 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
                                 } else if (snapshot.hasData) {
                                   file = snapshot.data;
                                   return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
                                     children: <Widget>[
                                       MaterialButton(
-                                        color: Colors.purple,
+                                        height: 50,
+                                        color: Colors.orange,
                                         child: Text(
                                           "Gerar assinatura",
-                                          style: TextStyle(color: Colors.white),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20),
                                         ),
                                         onPressed: () {
                                           setState(() {
@@ -99,6 +120,45 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
                                                 generateSignature();
                                           });
                                         },
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(6.0),
+                                      ),
+                                      Expanded(
+                                        child: FutureBuilder<String>(
+                                          future: futureSignature,
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            } else if (snapshot.hasData) {
+                                              signature = snapshot.data;
+                                              return Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.stretch,
+                                                children: <Widget>[
+                                                  MaterialButton(
+                                                    height: 50,
+                                                    color: Theme.of(context)
+                                                        .accentColor,
+                                                    child: Text(
+                                                      "Salvar assinatura",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 20),
+                                                    ),
+                                                    onPressed: () {},
+                                                  )
+                                                ],
+                                              );
+                                            } else {
+                                              return Container();
+                                            }
+                                          },
+                                        ),
                                       ),
                                     ],
                                   );
@@ -115,7 +175,7 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
                     }
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -140,17 +200,18 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
   }
 
   Future<String> generateSignature() async {
-    if (privK != null) {
-      if (file != null) {
-        return DependencyProvider.of(context)
-            .getRsaKeyHelper()
-            .signBytes(file, privK);
-      }
-      print("Erro: Arquivo");
-      return null;
-    }
-    print("Erro: Chave privada");
-    return null;
+    // if (privK != null) {
+    //   if (file != null) {
+    //     return DependencyProvider.of(context)
+    //         .getRsaKeyHelper()
+    //         .signBytes(file, privK);
+    //   }
+    //   print("Erro: Arquivo");
+    //   return null;
+    // }
+    // print("Erro: Chave privada");
+    // return null;
+    return "ok";
   }
 
   saveSignature() async {

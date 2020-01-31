@@ -1,13 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tst_crypto">
-    <!-- io.flutter.app.FlutterApplication is an android.app.Application that
-         calls FlutterMain.startInitialization(this); in its onCreate method.
-         In most cases you can leave this as-is, but you if you want to provide
-         additional functionality it is fine to subclass or reimplement
-         FlutterApplication and put your custom class here. -->
+    package="com.tcc.UFERSign">
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="tst_crypto"
+        android:label="UFERSign"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

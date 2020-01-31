@@ -21,7 +21,10 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
     return Scaffold(
       key: key,
       appBar: AppBar(
-        title: Text("Gerador de chaves"),
+        title: Text(
+          "Gerador de chaves",
+          style: TextStyle(fontSize: 24),
+        ),
       ),
       body: Center(
         child: Padding(
@@ -30,10 +33,11 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               MaterialButton(
-                color: Theme.of(context).accentColor,
+                height: 40,
+                color: Colors.blueGrey,
                 child: Text(
                   "Gerar par de chaves",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 onPressed: () {
                   setState(() {
@@ -41,6 +45,9 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
                     futureKeyPair = generateKeyPair();
                   });
                 },
+              ),
+              Padding(
+                padding: EdgeInsets.all(4.0),
               ),
               Expanded(
                 flex: 1,
@@ -57,9 +64,11 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           MaterialButton(
+                            height: 40,
                             child: Text(
                               "Mostrar chave de assinatura (privada)",
-                              style: TextStyle(color: Colors.white),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
                             ),
                             color: Colors.red,
                             onPressed: () {
@@ -72,10 +81,15 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
                               });
                             },
                           ),
+                          Padding(
+                            padding: EdgeInsets.all(4.0),
+                          ),
                           MaterialButton(
+                            height: 40,
                             child: Text(
                               "Mostrar chave de verificação (pública)",
-                              style: TextStyle(color: Colors.white),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
                             ),
                             color: Colors.green,
                             onPressed: () {
@@ -88,15 +102,29 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
                               });
                             },
                           ),
+                          Padding(
+                            padding: EdgeInsets.all(4.0),
+                          ),
                           MaterialButton(
+                            height: 40,
+                            color: Theme.of(context).accentColor,
                             child: Text(
-                              "Salvar chaves",
-                              style: TextStyle(color: Colors.purple),
+                              "Salvar par de chaves",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                             onPressed: () {
                               setState(() {
                                 saveKeyPair(keyPair);
                               });
+                              key.currentState.showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "Par de chaves salvo",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              );
                             },
                           )
                         ],
@@ -123,7 +151,7 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
                                 _copyTextToClipboard(snapshot.data);
                                 key.currentState.showSnackBar(
                                   SnackBar(
-                                    content: Text("Chave copiada"),
+                                    content: Text("Chave copiada", style: TextStyle(fontSize: 16),),
                                   ),
                                 );
                               },
@@ -133,7 +161,9 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
                         } else {
                           return Center(
                               child: Text(
-                                  "ATENÇÃO: Nunca divulgue sua chave privada"));
+                            "ATENÇÃO: Nunca divulgue sua chave privada",
+                            style: TextStyle(fontSize: 20),
+                          ));
                         }
                       },
                     ),

@@ -23,14 +23,14 @@ class LocalStorage {
     var now = DateTime.now();
     if (sit == false) {
       await Directory(
-              '${extDir.path}/chaves/key_${now.year}${now.month}${now.day}${now.hour}${now.minute}')
+              '${extDir.path}/chaves/key_${now.year}.${now.month}.${now.day}.${now.hour}.${now.minute}')
           .create(recursive: true)
           .then((Directory directory) {
         path = directory.path;
       });
     } else {
       await Directory(
-              '${extDir.path}/assinaturas/signature_${now.year}${now.month}${now.day}${now.hour}${now.minute}')
+              '${extDir.path}/assinaturas/signature_${now.year}.${now.month}.${now.day}.${now.hour}.${now.minute}')
           .create(recursive: true)
           .then((Directory directory) {
         path = directory.path;
