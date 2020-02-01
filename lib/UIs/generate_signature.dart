@@ -26,6 +26,7 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: key,
       appBar: AppBar(
         title: Text(
           "Assinar arquivo",
@@ -114,11 +115,18 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
                                               color: Colors.white,
                                               fontSize: 20),
                                         ),
-                                        onPressed: () {
+                                        onPressed: () async {
                                           setState(() {
                                             futureSignature =
-                                                generateSignature();
+                                                generateSignature(file, privK);
                                           });
+                                          key.currentState
+                                              .showSnackBar(SnackBar(
+                                            content: Text(
+                                              "Assinatura gerada",
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ));
                                         },
                                       ),
                                       Padding(
@@ -150,7 +158,9 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
                                                           color: Colors.white,
                                                           fontSize: 20),
                                                     ),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      print(signature);
+                                                    },
                                                   )
                                                 ],
                                               );
@@ -183,7 +193,7 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
     );
   }
 
-  Future<crypto.RSAPrivateKey> uploadPrivateKey(path) async {
+  Future<crypto.RSAPrivateKey> uploadPrivateKey(String path) async {
     if (path != null && path.isNotEmpty) {
       return DependencyProvider.of(context)
           .getRsaKeyHelper()
@@ -192,26 +202,23 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
     return null;
   }
 
-  Future<Uint8List> uploadFile(path) async {
+  Future<Uint8List> uploadFile(String path) async {
     if (path != null && path.isNotEmpty) {
       return File(path).readAsBytesSync();
     }
     return null;
   }
 
-  Future<String> generateSignature() async {
-    // if (privK != null) {
-    //   if (file != null) {
-    //     return DependencyProvider.of(context)
-    //         .getRsaKeyHelper()
-    //         .signBytes(file, privK);
-    //   }
-    //   print("Erro: Arquivo");
-    //   return null;
-    // }
-    // print("Erro: Chave privada");
-    // return null;
-    return "ok";
+  Future<String> generateSignature(
+      Uint8List file, crypto.RSAPrivateKey privateKey) async {
+    if (file != null) {
+      if (privateKey != null) {
+        return DependencyProvider.of(context)
+            .getRsaKeyHelper()
+            .signBytes(file, privateKey);
+      }
+    }
+    return null;
   }
 
   saveSignature() async {

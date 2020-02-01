@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tcc.UFERSign">
+    package="com.example.tst_crypto">
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="UFERSign"
+        android:label="tst_crypto"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
