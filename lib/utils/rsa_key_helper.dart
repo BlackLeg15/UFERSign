@@ -88,10 +88,22 @@ class RsaKeyHelper {
         signer.generateSignature(createUint8ListFromString(plainText)).bytes);
   }
 
+  // String signBytes(Uint8List bytes, RSAPrivateKey privateKey) {
+  //   var signer = RSASigner(SHA256Digest(), "0609608648016503040201");
+  //   signer.init(true, PrivateKeyParameter<RSAPrivateKey>(privateKey));
+  //   return base64Encode(signer.generateSignature(bytes).bytes);
+  // }
+
   String signBytes(Uint8List bytes, RSAPrivateKey privateKey) {
     var signer = RSASigner(SHA256Digest(), "0609608648016503040201");
     signer.init(true, PrivateKeyParameter<RSAPrivateKey>(privateKey));
     return base64Encode(signer.generateSignature(bytes).bytes);
+  }
+
+  bool verifyBytes(Uint8List bytes, RSAPublicKey publicKey, RSASignature signature) {
+    var signer = RSASigner(SHA256Digest(), "0609608648016503040201");
+    signer.init(false, PublicKeyParameter<RSAPublicKey>(publicKey));
+    return signer.verifySignature(bytes, signature);
   }
 
   /// Creates a [Uint8List] from a string to be signed

@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:pointycastle/export.dart' as crypto;
 import 'package:tst_crypto/utils/dependency_provider.dart';
+import 'package:tst_crypto/utils/local_storage.dart';
 
 class GenerateSignatureWidget extends StatefulWidget {
   @override
@@ -160,6 +161,10 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
                                                     ),
                                                     onPressed: () {
                                                       print(signature);
+                                                      setState(() {
+                                                        saveSignature(
+                                                            signature);
+                                                      });
                                                     },
                                                   )
                                                 ],
@@ -221,7 +226,8 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
     return null;
   }
 
-  saveSignature() async {
-    //final String path = await LocalStorage().getPath(true);
+  Future<void> saveSignature(String signature) async {
+    final String path = await LocalStorage().getPath(true);
+    LocalStorage().writeContent(signature, path, 2);
   }
 }

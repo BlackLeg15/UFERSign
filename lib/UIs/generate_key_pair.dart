@@ -199,7 +199,7 @@ class _GenerateKeyPairWidgetState extends State<GenerateKeyPairWidget> {
         .getRsaKeyHelper()
         .encodePublicKeyToPemPKCS1(keyPair.publicKey);
 
-    LocalStorage().writeKey(privK, path, false);
-    LocalStorage().writeKey(pubK, path, true);
+    LocalStorage().writeContent(privK, path, 0);
+    LocalStorage().writeContent(pubK, path, 1);
   }
 }

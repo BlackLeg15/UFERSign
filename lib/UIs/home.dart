@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(70.0),
+          padding: const EdgeInsets.all(60.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.stretch,

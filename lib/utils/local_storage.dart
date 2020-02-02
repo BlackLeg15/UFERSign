@@ -7,14 +7,18 @@ class LocalStorage {
 
   LocalStorage._();
 
-  Future<File> writeKey(String key, String path, bool type) async {
-    if (type == false) {
+  Future<File> writeContent(String content, String path, int type) async {
+    if (type == 0) {
       final file = File('$path/privada.txt');
-      return file.writeAsString('$key');
-    } else {
+      return file.writeAsString('$content');
+    } else if(type == 1) {
       final file = File('$path/publica.txt');
-      return file.writeAsString('$key');
+      return file.writeAsString('$content');
+    } else if(type == 2){
+      final file = File('$path/assinatura.txt');
+      return file.writeAsString('$content');
     }
+    return null;
   }
 
   Future<String> getPath(bool sit) async {
