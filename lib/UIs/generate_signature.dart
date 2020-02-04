@@ -160,11 +160,20 @@ class _GenerateSignatureStateWidget extends State<GenerateSignatureWidget> {
                                                           fontSize: 20),
                                                     ),
                                                     onPressed: () {
-                                                      print(signature);
                                                       setState(() {
                                                         saveSignature(
                                                             signature);
                                                       });
+                                                      key.currentState
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            "Assinatura salva",
+                                                            style: TextStyle(
+                                                                fontSize: 16),
+                                                          ),
+                                                        ),
+                                                      );
                                                     },
                                                   )
                                                 ],

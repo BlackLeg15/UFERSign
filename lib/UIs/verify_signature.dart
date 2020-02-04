@@ -137,7 +137,9 @@ class _VerifySignatureStateWidget extends State<VerifySignatureWidget> {
                                                       CircularProgressIndicator(),
                                                 );
                                               } else if (snapshot.hasData) {
+                                                signature = snapshot.data;
                                                 return Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.stretch,
                                                   children: <Widget>[
                                                     MaterialButton(
                                                       padding: EdgeInsets.only(
@@ -154,6 +156,7 @@ class _VerifySignatureStateWidget extends State<VerifySignatureWidget> {
                                                       onPressed: () {
                                                         int result =
                                                             verifySignature();
+                                                        print(result);
                                                         if (result != 0) {
                                                           showDialog(
                                                               context: context,
@@ -260,6 +263,9 @@ class _VerifySignatureStateWidget extends State<VerifySignatureWidget> {
         return 2;
       }
     }
+    print("--------------$pubK------------");
+    print("--------------$signature------------");
+    print("--------------$file------------");
     return 0;
   }
 }
